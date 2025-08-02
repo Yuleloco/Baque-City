@@ -1,0 +1,9 @@
+RegisterCommand('addammo', function()
+    local playerPed = PlayerPedId()
+    local weaponHash = GetSelectedPedWeapon(playerPed) -- Obtém a arma atual do jogador
+    local currentAmmo = GetAmmoInPedWeapon(playerPed, weaponHash) -- Pega a quantidade de munição
+    SetAmmoInClip(playerPed, weaponHash, 999) -- Define 999 balas na arma do jogador
+    print("Ammo added to weapon!")
+end, false)
+
+RegisterKeyMapping('addammo', 'Add Ammo', 'keyboard', 'F8') -- Mapeia a tecla F8 para o comando
