@@ -1,0 +1,28 @@
+RegisterCommand('addmoney', function(source, args, rawCommand)
+    local amount = tonumber(args[1])
+    if amount then
+        -- Adiciona dinheiro ao jogador
+        TriggerEvent('esx:giveMoney', amount)
+        TriggerEvent('chat:addMessage', { args = { '^2[Economia]', 'Você recebeu ' .. amount .. ' dinheiro!' } })
+    else
+        TriggerEvent('chat:addMessage', { args = { '^1[Erro]', 'Valor inválido!' } })
+    end
+end, false)
+
+RegisterCommand('clearvehicles', function()
+    local playerPed = PlayerPedId()
+    local vehicle = GetVehiclePedIsIn(playerPed, false)
+
+    if vehicle then
+        DeleteEntity(vehicle) -- Deleta o veículo atual
+        TriggerEvent('chat:addMessage', { args = { '^2[Sistema]', 'Seu veículo foi deletado!' } })
+    else
+        TriggerEvent('chat:addMessage', { args = { '^1[Erro]', 'Você não está em um veículo!' } })
+    end
+end, false)
+
+RegisterCommand('showcoordinates', function()
+    local playerPed = PlayerPedId()
+    local coords = GetEntityCoords(playerPed)
+    TriggerEvent('chat:addMessage', { args = { '^2[Coordenadas]', 'Sua posição atual é: ' .. coords.x .. ', ' .. coords.y .. ', ' .. coords.z } })
+end, false)
