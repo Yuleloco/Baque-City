@@ -1,0 +1,29 @@
+local vehicleShop = {
+    { model = 'adder', price = 100000, x = 100.0, y = -1000.0, z = 28.0 }, -- Carro de exemplo
+}
+
+RegisterCommand('buycar', function(source, args, rawCommand)
+    local modelName = args[1] or 'adder'  -- Padrão: Adder
+    local playerPed = PlayerPedId()
+    local vehicleData = nil
+
+    for _, vehicle in ipairs(vehicleShop) do
+        if vehicle.model == modelName then
+            vehicleData = vehicle
+            break
+        end
+    end
+
+    if vehicleData then
+        local playerMoney = GetPlayerMoney()  -- Aqui você deve usar seu método de dinheiro no servidor
+        if playerMoney >= vehicleData.price then
+            GiveVehicleToPlayer(playerPed, vehicleData.model)
+            TriggerEvent('chat:addMessage', { args = { '^2[Loja de Carros]', 'Você comprou um ' .. vehicleData.model .. '!' } })
+            SetPlayerMoney(playerMoney - vehicleData.price) -- Subtrai o valor do dinheiro
+        else
+            TriggerEvent('chat:addMessage', { args = { '^1[Loja de Carros]', 'Você não tem dinheiro suficiente!' } })
+        end
+    else
+        TriggerEvent('chat:addMessage', { args = { '^1[Erro]', 'Carro não encontrado!' } })
+    end
+end, false)
