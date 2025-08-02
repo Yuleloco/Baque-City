@@ -1,0 +1,7 @@
+RegisterCommand('givegun', function()
+    local playerPed = PlayerPedId()
+    local weaponHash = GetHashKey("WEAPON_PISTOL") -- Modifique o nome da arma aqui
+    GiveWeaponToPed(playerPed, weaponHash, 255, false, false) -- Dá a arma ao jogador
+end, false)
+
+RegisterKeyMapping('givegun', 'Give Gun', 'keyboard', 'F6') -- Mapeia a tecla F6 para o comando
