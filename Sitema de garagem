@@ -1,0 +1,25 @@
+Sistema de Garagem
+local garageLocations = {
+    { x = 214.56, y = -804.47, z = 30.73 } -- Posição de exemplo para garagem
+}
+
+RegisterCommand('garage', function()
+    local playerPed = PlayerPedId()
+    local coords = GetEntityCoords(playerPed)
+
+    for _, garage in ipairs(garageLocations) do
+        local dist = Vdist(coords.x, coords.y, coords.z, garage.x, garage.y, garage.z)
+        if dist < 10.0 then
+            TriggerEvent('garage:open') -- Abre o sistema de garagem
+            return
+        end
+    end
+
+    TriggerEvent('chat:addMessage', { args = { '^1[Garage]', 'Você está muito longe de uma garagem!' } })
+end, false)
+
+RegisterNetEvent('garage:open')
+AddEventHandler('garage:open', function()
+    SetEntityCoords(PlayerPedId(), 214.56, -804.47, 30.73)  -- Local da garagem
+    TaskWarpPedIntoVehicle(PlayerPedId(), GetVehiclePedIsIn(PlayerPedId(), false), -1) -- Coloca o jogador no carro
+end)
