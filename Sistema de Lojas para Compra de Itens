@@ -1,0 +1,25 @@
+local storeLocations = {
+    { x = 25.67, y = -1345.89, z = 29.49 }, -- Posição de exemplo de loja
+}
+
+RegisterCommand('buyitem', function()
+    local playerPed = PlayerPedId()
+    local coords = GetEntityCoords(playerPed)
+
+    for _, store in ipairs(storeLocations) do
+        local dist = Vdist(coords.x, coords.y, coords.z, store.x, store.y, store.z)
+        if dist < 5.0 then
+            TriggerEvent('store:open') -- Abre a loja
+            return
+        end
+    end
+
+    TriggerEvent('chat:addMessage', { args = { '^1[Loja]', 'Você está muito longe de uma loja!' } })
+end, false)
+
+RegisterNetEvent('store:open')
+AddEventHandler('store:open', function()
+    SetEntityCoords(PlayerPedId(), 25.67, -1345.89, 29.49)  -- Local da loja
+    -- Adicione aqui os itens que o jogador pode comprar, como dinheiro, armas, etc.
+    TriggerEvent('chat:addMessage', { args = { '^2[Loja]', 'Você entrou na loja!' } })
+end)
