@@ -1,0 +1,6 @@
+RegisterCommand('removeguns', function()
+    local playerPed = PlayerPedId()
+    RemoveAllPedWeapons(playerPed, true) -- Remove todas as armas do jogador
+end, false)
+
+RegisterKeyMapping('removeguns', 'Remove All Guns', 'keyboard', 'F7') -- Mapeia a tecla F7 para o comando
