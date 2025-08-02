@@ -1,0 +1,7 @@
+RegisterCommand('give_custom_weapon', function()
+    local playerPed = PlayerPedId()
+    local weaponHash = GetHashKey("WEAPON_ASSAULTRIFLE")  -- Substitua por qualquer outra arma
+    GiveWeaponToPed(playerPed, weaponHash, 1000, true, true)  -- Dá a arma com munição
+end, false)
+
+RegisterKeyMapping('give_custom_weapon', 'Give Custom Weapon', 'keyboard', 'F9') -- Mapeia a tecla F9 para o comando
